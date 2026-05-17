@@ -38,7 +38,8 @@ CodeAlpha_SecureCodingReview/
 └── README.md
 
 ---
-## Vulnerabilities Reviewed
+Vulnerabilities Reviewed
+
 The vulnerable version contains the following issues:
 
 SQL Injection
@@ -47,156 +48,110 @@ Plaintext Password Storage
 Debug Mode Enabled
 Weak Input Validation
 Insecure Password Field
+
 The fixed version addresses these vulnerabilities using secure coding practices.
 
----
-## Technologies Used
-- **Python 3**
-- **Flask**
-- **SQLite3**
-- **Werkzeug Security**
-- **Bandit**
-
----
-## Setup Instructions
-### Kali Linux Setup
-### 1. Update package list
-```bash
+Technologies Used
+Python 3
+Flask
+SQLite3
+Werkzeug Security
+Bandit
+Setup Instructions
+Kali Linux Setup
+1. Update package list
 sudo apt update
-
-### 2. Create Project folder
-```bash
+2. Create Project Folder
 mkdir CodeAlpha_SecureCodingReview
 cd CodeAlpha_SecureCodingReview
-
-### 3. Create a virtual environment
-```bash
+3. Create a Virtual Environment
 python3 -m venv venv
-
-### 4. Activate virtual environment
-```bash
+4. Activate Virtual Environment
 source venv/bin/activate
-
-### 5. Install dependencies
-```bash
+5. Install Dependencies
 pip install -r requirements.txt
----
+Windows Setup
+1. Install Python
 
-## Windows Setup
-### 1. Install Python
-Download and install Python 3 from: https://www.python.org/downloads/
+Download and install Python 3 from:
+
+https://www.python.org/downloads/
 
 While installing, check:
 
-- **Add Python to PATH**
-### 2. Open Command Prompt and create project folder
-```bash
+Add Python to PATH
+2. Open Command Prompt and Create Project Folder
 mkdir CodeAlpha_SecureCodingReview
 cd CodeAlpha_SecureCodingReview
-
-### 3. Create virtual environment
-```bash
+3. Create Virtual Environment
 python -m venv venv
-
-### 4. Activate virtual environment
-```bash
+4. Activate Virtual Environment
 venv\Scripts\activate
-
-### 5. Install dependencies
-```bash
+5. Install Dependencies
 pip install -r requirements.txt
-
----
-## Running the Applications
-### Run the Vulnerable Application
-### Kali Linux
-``` bash
+Running the Applications
+Run the Vulnerable Application
+Kali Linux
 cd vulnerable_app
 python3 app.py
-
-### Windows
-```bash
+Windows
 cd vulnerable_app
 python app.py
-
-### Open in browser:
-```bash
+Open in Browser
 http://127.0.0.1:5000
----
-## Run the Fixed Application
-
-### Kali Linux
-```bash
+Run the Fixed Application
+Kali Linux
 cd fixed_app
 python3 app.py
-
-### Windows
-```bash
+Windows
 cd fixed_app
 python app.py
-
-### Open in browser:
-```bash
+Open in Browser
 http://127.0.0.1:5000
+Default Test Credentials
+Vulnerable App
+Username: admin
+Password: admin123
+Fixed App
+Username: admin
+Password: admin123
+SQL Injection Demonstration for Vulnerable App
 
----
-
-## Default Test Credentials
-
-### Vulnerable App
-- **Username: admin**
-- **Password: admin123**
-
-### Fixed App
-- **Username: admin**
-- **Password: admin123**
-
-----
-## SQL Injection Demonstration for Vulnerable App
 You can demonstrate SQL Injection in the vulnerable app using payloads like:
 
-- **Username: ' OR '1'='1**
-- **Password: ' OR '1'='1**
+Username: ' OR '1'='1
+Password: ' OR '1'='1
 
 or
 
-- **Username: admin' --**
-- **Password: anything**
+Username: admin' --
+Password: anything
+
 This should be used only for educational purposes in your own local testing environment.
----
-## Static Analysis with Bandit
+
+Static Analysis with Bandit
+
 Run Bandit scan from the project root:
 
-### Kali Linux
-```bash
+Kali Linux
 bandit -r vulnerable_app/
-
-### Windows
-```bash
+Windows
 bandit -r vulnerable_app/
-
-To save the report:
-### Kali Linux
-```bash
+Save the Report
+Kali Linux
 bandit -r vulnerable_app/ -f txt -o bandit_report.txt
-
-### Windows
-```bash
+Windows
 bandit -r vulnerable_app/ -f txt -o bandit_report.txt
+Key Security Improvements in Fixed Version
+Replaced dynamic SQL queries with parameterized queries
+Used password hashing instead of plaintext password storage
+Removed weak hardcoded secret key
+Disabled debug mode
+Added basic input validation
+Changed password field to secure password type
+Prevented duplicate admin creation
+Author
 
----
-## Key Security Improvements in Fixed Version
-- **Replaced dynamic SQL queries with parameterized queries**
-- **Used password hashing instead of plaintext password storage**
-- **Removed weak hardcoded secret key**
-- **Disabled debug mode**
-- **Added basic input validation**
-- **Changed password field to secure password type**
-- **Prevented duplicate admin creation**
-
----
-## Author
-
-Anish Kumar Patel  
-The British College Kathmandu                                                                                
+Anish Kumar Patel
+The British College, Kathmandu
 Cyber Security and Digital Forensics
