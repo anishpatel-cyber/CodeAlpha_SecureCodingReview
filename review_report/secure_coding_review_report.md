@@ -3,146 +3,208 @@
 ## Project Title
 Secure Coding Review of a Python Flask Login Application
 
+---
+
 ## Objective
 The purpose of this project is to review a Flask web application, find security problems, and fix them using secure coding practices.
 
+---
+
 ## Application Reviewed
+
 - Python Flask login application
 - SQLite database
 - User login form
 
+---
+
 ## Tools Used
+
 - Python 3
 - Flask
 - SQLite3
 - Bandit
 - Manual Code Review
 
+---
+
 ## Vulnerabilities Found
 
 ### 1. SQL Injection
-**Problem:**  
+
+#### Problem
 The application builds SQL queries directly using user input.
 
-**Vulnerable Code:**
-```bash
+#### Vulnerable Code
+
+```python
 query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+```
 
-Risk Level: High
+#### Risk Level
+**High**
 
-Impact:
+#### Impact
 An attacker can bypass authentication or manipulate the database query.
 
-Remediation:
+#### Remediation
 Use parameterized queries:
+
 ```python
-cursor.execute("SELECT username, password FROM users WHERE username = ?", (username,))
+cursor.execute(
+    "SELECT username, password FROM users WHERE username = ?",
+    (username,)
+)
+```
+
 ---
+
 ### 2. Hardcoded Secret Key
-**Description:**
+
+#### Description
 The Flask secret key is hardcoded and weak.
 
-**Vulnerable Code:**
-```bash
+#### Vulnerable Code
+
+```python
 app.secret_key = "12345"
+```
 
-Risk Level: Medium
+#### Risk Level
+**Medium**
 
-Impact:
+#### Impact
 Attackers may forge session data if the secret key is predictable.
 
-Remediation:
+#### Remediation
 Use environment variables or securely generated keys.
+
 ---
+
 ### 3. Plaintext Password Storage
-**Description:**
+
+#### Description
 Passwords are stored directly in the database without hashing.
 
-Risk Level: High
+#### Risk Level
+**High**
 
-**Impact:**
+#### Impact
 If the database is compromised, all user credentials are exposed.
 
-**Remediation:**
-Use password hashing with werkzeug.security.generate_password_hash().
+#### Remediation
+Use password hashing with:
+
+```python
+from werkzeug.security import generate_password_hash
+```
+
+Example:
+
+```python
+hashed_password = generate_password_hash(password)
+```
+
 ---
+
 ### 4. Debug Mode Enabled
-**Description:**
+
+#### Description
 The application runs with debug mode enabled.
 
-**Vulnerable Code:**
-```bash
+#### Vulnerable Code
+
+```python
 app.run(debug=True)
+```
 
-Risk Level: Medium
+#### Risk Level
+**Medium**
 
-**Impact:**
+#### Impact
 Debug mode may expose stack traces and internal application details.
 
-**Remediation:**
+#### Remediation
 Disable debug mode in production:
-```bash
+
+```python
 app.run(debug=False)
+```
+
 ---
+
 ### 5. Weak Input Validation
-**Description:**
+
+#### Description
 The application does not validate input length or format.
 
-Risk Level: Medium
+#### Risk Level
+**Medium**
 
-**Impact:**
+#### Impact
 Improper input handling may contribute to attacks or application instability.
 
-**Remediation:**
+#### Remediation
 Validate user inputs before processing.
+
 ---
+
 ## Static Analysis Findings
+
 Bandit was used to perform static analysis of the codebase. The tool highlighted insecure patterns such as hardcoded secrets and unsafe implementation practices.
 
+---
+
 ## Secure Version Improvements
+
 The remediated application includes:
 
-- **Parameterized SQL queries**
-- **Password hashing**
-- **Stronger secret key management**
-- **Disabled debug mode**
-- **Improved form handling and validation**
-
-## Conclusion
-The review identified several common but critical security issues in the application. After remediation, the application follows more secure coding practices and provides better protection against common web application attacks.
-
+- Parameterized SQL queries
+- Password hashing
+- Stronger secret key management
+- Disabled debug mode
+- Improved form handling and validation
 
 ---
 
-# Step 7: What to demonstrate in your internship submission
+## Conclusion
+
+The review identified several common but critical security issues in the application. After remediation, the application follows more secure coding practices and provides better protection against common web application attacks.
+
+---
+
+## Step 7: What to Demonstrate in Your Internship Submission
 
 For GitHub and video explanation, show:
 
-- vulnerable code
+- Vulnerable code
 - SQL injection demo
 - Bandit scan
-- secure fixed code
-- explanation of each vulnerability
-- how each fix works
+- Secure fixed code
+- Explanation of each vulnerability
+- How each fix works
 
 ---
 
-# Step 8: Commands for Kali Linux
+## Step 8: Commands for Kali Linux
 
-From project root:
+From the project root:
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install flask bandit werkzeug
 python3 vulnerable_app/app.py
+```
 
-For scan:
+### Run Bandit Scan
+
 ```bash
 bandit -r vulnerable_app/
+```
 
-Run secure version:
+### Run Secure Version
+
 ```bash
 python3 fixed_app/app.py
-
----
+```
