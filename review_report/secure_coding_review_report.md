@@ -188,7 +188,7 @@ For GitHub and video explanation, show:
 
 ## Step 8: Commands for Kali Linux
 
-From the project root:
+From project root:
 
 ```bash
 python3 -m venv venv
